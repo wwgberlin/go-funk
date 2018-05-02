@@ -10,6 +10,7 @@ import (
 
 // Samples loads a wav file and returns, if successful, a slice containing all
 // the audio samples.
+//TODO pass io.Reader
 func Samples(file string) ([]int, error) {
 	f, err := os.Open(file)
 	if err != nil {
