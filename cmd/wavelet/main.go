@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -9,10 +10,11 @@ import (
 
 func main() {
 	var port = flag.String("port", "8080", "server port.")
+	host := fmt.Sprintf(":%s", *port)
 
 	http.HandleFunc("/", ok)
 
-	log.Fatal(http.ListenAndServe(":"+*port, nil))
+	log.Fatal(http.ListenAndServe(host, nil))
 }
 
 func ok(w http.ResponseWriter, req *http.Request) {
