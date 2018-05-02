@@ -2,12 +2,17 @@ package wav
 
 import (
 	"math"
+	"os"
 	"path/filepath"
 	"testing"
 )
 
 func TestSamples(t *testing.T) {
-	file, err := filepath.Abs("../../fixtures/fixture.wav")
+	path, err := filepath.Abs("../../fixtures/fixture.wav")
+	if err != nil {
+		t.Fatal(err)
+	}
+	file, err := os.Open(path)
 	if err != nil {
 		t.Fatal(err)
 	}

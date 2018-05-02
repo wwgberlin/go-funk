@@ -1,29 +1,21 @@
 package wav
 
 import (
-	"os"
+	"io"
 
 	"github.com/go-audio/audio"
 	_wav "github.com/go-audio/wav"
 	"github.com/pkg/errors"
 )
 
-// Samples loads a wav file and returns, if successful, a slice containing all
+// Samples WAV samples and returns, if successful, a slice containing all
 // the audio samples.
-//TODO pass io.Reader
-func Samples(file string) ([]int, error) {
-	f, err := os.Open(file)
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-
-	d := _wav.NewDecoder(f)
+func Samples(r io.ReadSeeker) (samples []int, err error) {
+	d := _wav.NewDecoder(r)
 	if !d.IsValidFile() {
-		return nil, errors.Errorf("invalid file: %q", file)
+		return nil, errors.Errorf("invalid file")
 	}
 
-	samples := []int{}
 	intBuf := make([]int, 256)
 	buf := &audio.IntBuffer{Data: intBuf}
 
