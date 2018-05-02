@@ -5,7 +5,7 @@ wavelet: $(GO_FILES)
 
 .PHONY: test
 test: $(GO_FILES)
-	go test ./...
+	go test -v ./...
 
 .PHONY: run-server
 run-server: wavelet test
