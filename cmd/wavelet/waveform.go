@@ -15,9 +15,16 @@ import (
 	"github.com/soundcloud/wavelet/lib/wav"
 )
 
-var methods = map[string]sampler.SamplerFunc{
+var sampling = map[string]sampler.SamplerFunc{
 	"avg":     sampler.Avg,
 	"abs_avg": sampler.AbsAvg,
+}
+
+type ColorFunc func(int, int) color.Color
+
+var colors = map[string]ColorFunc{
+	"simple": simple,
+	"reds":   reds,
 }
 
 func waveform(w http.ResponseWriter, req *http.Request) {
@@ -27,14 +34,23 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	methodKey := req.URL.Query().Get("method")
-	if methodKey == "" {
-		methodKey = "abs_avg"
+	samplingKey := req.URL.Query().Get("sampling")
+	if samplingKey == "" {
+		samplingKey = "abs_avg"
+	}
+	samplingFunc, ok := sampling[samplingKey]
+	if !ok {
+		http.Error(w, fmt.Sprintf("could not find sampling method with key %q", samplingKey), http.StatusInternalServerError)
+		return
 	}
 
-	samplingMethod, ok := methods[methodKey]
+	colorKey := req.URL.Query().Get("colors")
+	if colorKey == "" {
+		colorKey = "simple"
+	}
+	colorFunc, ok := colors[colorKey]
 	if !ok {
-		http.Error(w, fmt.Sprintf("could not find sampling method with key %q", methodKey), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("could not find colors method with key %q", colorKey), http.StatusInternalServerError)
 		return
 	}
 
@@ -50,16 +66,16 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	points, err := samplingMethod(samples, width)
+	points, err := samplingFunc(samples, width)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	drawWaveform(w, points)
+	drawWaveform(w, points, colorFunc)
 }
 
-func drawWaveform(w io.Writer, points []int) {
+func drawWaveform(w io.Writer, points []int, colorFunc ColorFunc) {
 	s := utils.IntSliceStats(points)
 	width, height := len(points), s.Max
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
@@ -68,7 +84,7 @@ func drawWaveform(w io.Writer, points []int) {
 
 	for i, v := range points {
 		for j := height; j > height-v; j-- {
-			img.Set(i, j, color.Black)
+			img.Set(i, j, colorFunc(i, j))
 		}
 	}
 
@@ -82,4 +98,12 @@ func setBackground(img *image.RGBA, c color.Color) {
 			img.Set(x, y, c)
 		}
 	}
+}
+
+func simple(x, y int) color.Color {
+	return color.Black
+}
+
+func reds(x, y int) color.Color {
+	return color.RGBA{R: uint8(255 - y), G: 0, B: 0, A: 255}
 }
