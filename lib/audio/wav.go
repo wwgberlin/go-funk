@@ -1,17 +1,17 @@
-package wav
+package audio
 
 import (
 	"io"
 
 	"github.com/go-audio/audio"
-	_wav "github.com/go-audio/wav"
+	"github.com/go-audio/wav"
 	"github.com/pkg/errors"
 )
 
 // Samples WAV samples and returns, if successful, a slice containing all
 // the audio samples.
 func Samples(r io.ReadSeeker) (samples []int, err error) {
-	d := _wav.NewDecoder(r)
+	d := wav.NewDecoder(r)
 	if !d.IsValidFile() {
 		return nil, errors.Errorf("invalid file")
 	}

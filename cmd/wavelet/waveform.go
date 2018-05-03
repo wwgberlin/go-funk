@@ -10,9 +10,9 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/soundcloud/wavelet/lib/audio"
 	"github.com/soundcloud/wavelet/lib/sampler"
 	"github.com/soundcloud/wavelet/lib/utils"
-	"github.com/soundcloud/wavelet/lib/wav"
 )
 
 var sampling = map[string]sampler.SamplerFunc{
@@ -59,7 +59,7 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	samples, err := wav.Samples(file)
+	samples, err := audio.Samples(file)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/soundcloud/wavelet/lib/audio"
 	"github.com/soundcloud/wavelet/lib/sampler"
-	"github.com/soundcloud/wavelet/lib/wav"
 )
 
 func points(w http.ResponseWriter, req *http.Request) {
@@ -16,7 +16,7 @@ func points(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	samples, err := wav.Samples(file)
+	samples, err := audio.Samples(file)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
