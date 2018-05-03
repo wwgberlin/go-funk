@@ -68,7 +68,7 @@ func drawWaveformGif(w io.Writer, points []int, width, height int) {
 	gif.EncodeAll(w, &anim)
 }
 
-var palette = []color.Color{color.White, color.Black}
+var palette = []color.Color{color.Black, color.White}
 
 const (
 	whiteIndex = 0 // first color in palette
@@ -80,7 +80,7 @@ func renderFrame(v int, width, height int) *image.Paletted {
 	img := image.NewPaletted(rect, palette)
 
 	for x := 0; x < width; x++ {
-		for y := 0; y < normalize(v, height, 255); y++ {
+		for y := height; y > height-normalize(v, height, 255); y-- {
 			img.SetColorIndex(x, y, blackIndex)
 		}
 	}
