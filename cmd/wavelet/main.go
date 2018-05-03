@@ -13,6 +13,7 @@ func main() {
 
 	http.HandleFunc("/", ok)
 	http.HandleFunc("/points", points)
+	http.HandleFunc("/waveform", waveform)
 
 	log.Fatal(http.ListenAndServe(host, nil))
 }
