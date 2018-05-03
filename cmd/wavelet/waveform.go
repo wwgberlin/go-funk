@@ -1,23 +1,40 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
 	"io"
-	"math"
 	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/soundcloud/wavelet/lib/sampler"
+	"github.com/soundcloud/wavelet/lib/utils"
 	"github.com/soundcloud/wavelet/lib/wav"
 )
+
+var methods = map[string]sampler.SamplerFunc{
+	"avg":     sampler.AvgSample,
+	"abs_avg": sampler.AbsAvgSample,
+}
 
 func waveform(w http.ResponseWriter, req *http.Request) {
 	width, err := strconv.Atoi(req.URL.Query().Get("width"))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	methodKey := req.URL.Query().Get("method")
+	if methodKey == "" {
+		methodKey = "abs_avg"
+	}
+
+	samplingMethod, ok := methods[methodKey]
+	if !ok {
+		http.Error(w, fmt.Sprintf("could not find sampling method with key %q", methodKey), http.StatusInternalServerError)
 		return
 	}
 
@@ -33,7 +50,7 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	points, err := sampler.Sample(samples, width)
+	points, err := samplingMethod(samples, width)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -43,14 +60,14 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 }
 
 func drawWaveform(w io.Writer, points []int) {
-	width, height := len(points), 255
+	s := utils.IntSliceStats(points)
+	width, height := len(points), s.Max
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 
 	setBackground(img, color.White)
 
 	for i, v := range points {
-		barHeight := clamp(v, 255)
-		for j := height; j > height-barHeight; j-- {
+		for j := height; j > height-v; j-- {
 			img.Set(i, j, color.Black)
 		}
 	}
@@ -65,8 +82,4 @@ func setBackground(img *image.RGBA, c color.Color) {
 			img.Set(x, y, c)
 		}
 	}
-}
-
-func clamp(v, max int) int {
-	return int(math.Min(math.Abs(float64(v)), float64(max)))
 }
