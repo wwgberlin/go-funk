@@ -13,6 +13,10 @@ Try rendering a couple waveforms with:
     curl http://localhost:8080/waveform > waveform.png
     curl http://localhost:8080/waveform?width=1200&colors=reds&sampling=abs_avg > waveform.png
 
+Try rendering a "real-time" gif of the samples:
+
+    curl http://localhost:8080/gif?count=5000&width=50&height=200 > samples.gif
+
 ## Workshop
 
 1. Render samples as PNG waveform.
