@@ -15,6 +15,7 @@ func main() {
 	http.HandleFunc("/points", points)
 	http.HandleFunc("/waveform", waveform)
 	http.HandleFunc("/gif", gifHandler)
+	http.HandleFunc("/gif2", gifHandler2)
 
 	log.Fatal(http.ListenAndServe(host, nil))
 }
