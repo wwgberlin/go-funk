@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/soundcloud/wavelet/lib/audio"
-	"github.com/soundcloud/wavelet/lib/sampler"
+	"github.com/wwgberlin/go-funk/lib/audio"
+	"github.com/wwgberlin/go-funk/lib/sampler"
 )
 
 func points(w http.ResponseWriter, req *http.Request) {
