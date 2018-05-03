@@ -1,0 +1,31 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "pnZHJigSA3Fn9PRe1xFBIun6ifQ=",
+			"path": "github.com/go-audio/audio",
+			"revision": "b697a35b5608fcf1c4f90a9d4f33d76bd70e8fe6",
+			"revisionTime": "2018-02-06T23:14:10Z"
+		},
+		{
+			"checksumSHA1": "GkppKSJal6BMhO6435ssafzkMa4=",
+			"path": "github.com/go-audio/wav",
+			"revision": "474d6485029b52ab4078275503872e7b739fb89f",
+			"revisionTime": "2018-01-29T08:06:50Z"
+		},
+		{
+			"checksumSHA1": "uRdoDQNpEqx6LaKqjoDo+ylknFI=",
+			"path": "github.com/mattetti/audio/riff",
+			"revision": "b7bc1ebaf222d206df57afe66d58ed2249a8061d",
+			"revisionTime": "2018-04-03T01:03:54Z"
+		},
+		{
+			"checksumSHA1": "ljd3FhYRJ91cLZz3wsH9BQQ2JbA=",
+			"path": "github.com/pkg/errors",
+			"revision": "816c9085562cd7ee03e7f8188a1cfd942858cded",
+			"revisionTime": "2018-03-11T21:45:15Z"
+		}
+	],
+	"rootPath": "github.com/soundcloud/go-funk"
+}
