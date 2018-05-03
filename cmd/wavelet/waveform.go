@@ -30,8 +30,7 @@ var colors = map[string]ColorFunc{
 func waveform(w http.ResponseWriter, req *http.Request) {
 	width, err := strconv.Atoi(req.URL.Query().Get("width"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		width = 1200
 	}
 
 	samplingKey := req.URL.Query().Get("sampling")
