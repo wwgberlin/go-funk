@@ -6,7 +6,7 @@ import (
 	"math"
 )
 
-func AbsAvgSample(in []int, n int) ([]int, error) {
+func AbsAvg(in []int, n int) ([]int, error) {
 	if n <= 0 {
 		return nil, fmt.Errorf("invalid sample count: %v", n)
 	}

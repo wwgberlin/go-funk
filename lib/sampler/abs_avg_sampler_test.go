@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestAbsAvgSample(t *testing.T) {
+func TestAbsAvg(t *testing.T) {
 	type args struct {
 		in []int
 		n  int
@@ -24,7 +24,7 @@ func TestAbsAvgSample(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := AbsAvgSample(tt.args.in, tt.args.n)
+			got, err := AbsAvg(tt.args.in, tt.args.n)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("AbsAvgSample() error = %v, wantErr %v", err, tt.wantErr)
 				return

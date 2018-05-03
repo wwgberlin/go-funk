@@ -16,8 +16,8 @@ import (
 )
 
 var methods = map[string]sampler.SamplerFunc{
-	"avg":     sampler.AvgSample,
-	"abs_avg": sampler.AbsAvgSample,
+	"avg":     sampler.Avg,
+	"abs_avg": sampler.AbsAvg,
 }
 
 func waveform(w http.ResponseWriter, req *http.Request) {

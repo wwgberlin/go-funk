@@ -22,7 +22,7 @@ func points(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	points, err := sampler.AvgSample(samples, 1200)
+	points, err := sampler.Avg(samples, 1200)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
