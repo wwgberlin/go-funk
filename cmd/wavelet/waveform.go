@@ -58,6 +58,7 @@ func waveform(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	defer file.Close()
 
 	samples, err := audio.Samples(file)
 	if err != nil {

@@ -21,6 +21,7 @@ func points(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	defer file.Close()
 
 	points, err := sampler.Avg(samples, 1200)
 	if err != nil {

@@ -16,6 +16,7 @@ func TestSamples(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer file.Close()
 
 	samples, err := Samples(file)
 	if err != nil {
