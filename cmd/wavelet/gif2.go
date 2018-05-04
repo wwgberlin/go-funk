@@ -2,7 +2,6 @@ package main
 
 import (
 	"image"
-	"image/color"
 	"image/gif"
 	"io"
 	"net/http"
@@ -13,7 +12,7 @@ import (
 	"github.com/wwgberlin/go-funk/lib/sampler"
 )
 
-func gifHandler(w http.ResponseWriter, req *http.Request) {
+func gifHandler2(w http.ResponseWriter, req *http.Request) {
 	width, err := strconv.Atoi(req.URL.Query().Get("width"))
 	if err != nil {
 		width = 50
@@ -46,10 +45,10 @@ func gifHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	drawWaveformGif(w, points, width, height)
+	drawWaveformGif2(w, points, width, height)
 }
 
-func drawWaveformGif(w io.Writer, points []int, width, height int) {
+func drawWaveformGif2(w io.Writer, points []int, width, height int) {
 	const (
 		duration = 213.574649 // track duration in seconds
 	)
@@ -58,8 +57,9 @@ func drawWaveformGif(w io.Writer, points []int, width, height int) {
 
 	anim := gif.GIF{LoopCount: len(points)}
 
-	for _, v := range points {
-		img := renderFrame(v, width, height)
+	for i := range points {
+		low, high := clampMin(i-width/2, 0), clampMax(i+width/2, len(points))
+		img := renderFrame2(points[low:high], width, height)
 
 		anim.Delay = append(anim.Delay, delay)
 		anim.Image = append(anim.Image, img)
@@ -68,18 +68,11 @@ func drawWaveformGif(w io.Writer, points []int, width, height int) {
 	gif.EncodeAll(w, &anim)
 }
 
-var palette = []color.Color{color.Black, color.White}
-
-const (
-	whiteIndex = 0 // first color in palette
-	blackIndex = 1 // next color in palette
-)
-
-func renderFrame(v int, width, height int) *image.Paletted {
+func renderFrame2(points []int, width, height int) *image.Paletted {
 	rect := image.Rect(0, 0, width, height)
 	img := image.NewPaletted(rect, palette)
 
-	for x := 0; x < width; x++ {
+	for x, v := range points {
 		for y := height; y > height-normalize(v, height, 255); y-- {
 			img.SetColorIndex(x, y, blackIndex)
 		}
@@ -88,6 +81,16 @@ func renderFrame(v int, width, height int) *image.Paletted {
 	return img
 }
 
-func normalize(v, height, max int) int {
-	return v * height / max
+func clampMin(v, min int) int {
+	if v < min {
+		return min
+	}
+	return v
+}
+
+func clampMax(v, max int) int {
+	if v > max {
+		return max
+	}
+	return v
 }
