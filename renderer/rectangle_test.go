@@ -17,7 +17,7 @@ func (img *imgMock) Set(x, y int, c color.Color) {
 
 func mockColorFunc() ColorFunc {
 	prev := color.White
-	return func(i int, i2 int, i3 int) color.Color {
+	return func(i int, i2 int, i3, i4, i5 int) color.Color {
 		if prev == color.White {
 			prev = color.Black
 		} else {

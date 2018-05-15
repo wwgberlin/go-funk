@@ -42,14 +42,15 @@ func TestColorGopherFunc(t *testing.T) {
 	}}
 
 	x, y := rand.Intn(newDim), rand.Intn(newDim)
-	c := ColorGopherFunc(m).Color(x, y, newDim)
+	xOffset, yOffset := 1, 1
+	c := ColorGopherFunc(m).Color(x, xOffset, y, yOffset, newDim)
 
 	if c != res {
 		t.Fatalf("ColorGopherFunc returned Unexpected color. Exepected: %v. Got: %v", res, c)
 	}
 
-	expectedX := x * dim / newDim
-	expectedY := y * dim / newDim
+	expectedX := (x - xOffset) * dim / newDim
+	expectedY := (y - yOffset) * dim / newDim
 
 	if recX != expectedX || recY != expectedY {
 		t.Fatalf("Unexpected request to At. Expected At(%d,%d) but got At(%d,%d)",

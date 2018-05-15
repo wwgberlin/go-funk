@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"image"
-	"image/color"
 	"math"
 	"net/http"
 
@@ -88,21 +87,4 @@ func waveformHandler(data audio.WavData) func(w http.ResponseWriter, r *http.Req
 	}
 
 	return handler(data, &defaults, renderer.DrawWaveform)
-}
-
-// ColorGopherFunc takes an image and returns a renderer.ColorFunc
-// that takes x,y and height, calculates the original x and y
-// (respective to the new height) and returns the color at the original
-// co-ordinates.
-// Use the ratio between the original image height and the given height
-// to determine the original x and y, then call img.At(origX, origY) to
-// return the color.
-
-func ColorGopherFunc(img image.Image) renderer.ColorFunc {
-	imgHeight := img.Bounds().Max.Y - img.Bounds().Min.Y
-	return func(x, xOffset, y, yOffset, height int) color.Color {
-		oldX := (x - xOffset) * imgHeight / height
-		oldY := (y - yOffset) * imgHeight / height
-		return img.At(oldX, oldY)
-	}
 }
