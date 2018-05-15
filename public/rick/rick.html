@@ -1,0 +1,32 @@
+<html>
+<body>
+<button id="button" data-toggle="0" type="button" onclick="myFunction()">Play!</button>
+<div id="img"></div>
+<script>
+
+    var b = document.getElementById('button');
+    var d = document.getElementById('img');
+    var audio = new Audio('fixture.wav');
+
+    function myFunction() {
+        if (b.getAttribute("data-toggle") === "0") {
+            audio.currentTime = 0;
+            b.innerText = "Stop!";
+            b.setAttribute("data-toggle", "1");
+
+            var img = new Image();
+            d.appendChild(img);
+            img.src = "/gif?colors=reds";
+            img.onload = function () {
+                audio.play();
+            }
+        } else {
+            b.innerText = "Play!";
+            b.setAttribute("data-toggle", "0");
+            audio.pause();
+            d.innerHTML = "";
+        }
+    }
+</script>
+</body>
+</html>

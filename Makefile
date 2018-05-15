@@ -1,13 +1,13 @@
 GO_FILES:=$(shell find . -name "*.go")
 
 wavelet: $(GO_FILES)
-	go build ./cmd/wavelet
+	go build .
 
 .PHONY: test
 test: $(GO_FILES)
 	go test -v ./...
 
 .PHONY: run-server
-run-server: wavelet test
-	./wavelet -port 8080
+run-server: go-funk test
+	./go-funk -port 8080
 
