@@ -32,6 +32,7 @@ func normalize(v, height, maxSlice int) int {
 	return v * height / maxSlice
 }
 
+//todo: make public add tests and remove implementation
 func project(in []int, height int) []int {
 	maxSlice := max(in)
 	out := make([]int, len(in))

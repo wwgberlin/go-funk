@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image"
+	"image/png"
 	"log"
 	"net"
 	"net/http"
@@ -40,6 +42,8 @@ func start(addr string, data audio.WavData) {
 	http.HandleFunc("/gif", gifHandler(data))
 	http.HandleFunc("/gif2", gif2Handler(data))
 
+	http.HandleFunc("/gopher", gopherHandler(data, gopherImage()))
+
 	http.Handle("/rick/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
 
 	log.Fatal(http.ListenAndServe(addr, nil))
@@ -55,6 +59,19 @@ func getFileData(filePath string) (data audio.WavData, err error) {
 	return
 }
 
+func gopherImage() image.Image {
+	f, err := os.Open("public/rick/gopher.jpeg")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	img, err := png.Decode(f)
+	if err != nil {
+		panic(err)
+	}
+	return img
+
+}
 func ok(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(w, "ok")
 }
