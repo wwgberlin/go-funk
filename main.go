@@ -38,6 +38,7 @@ func start(addr string, data audio.WavData) {
 	http.HandleFunc("/samples", samplesHandler(data))
 	http.HandleFunc("/waveform", waveformHandler(data))
 	http.HandleFunc("/gif", gifHandler(data))
+	http.HandleFunc("/gif2", gif2Handler(data))
 
 	http.Handle("/rick/", http.StripPrefix("/", http.FileServer(http.Dir("./public"))))
 
