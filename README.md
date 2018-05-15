@@ -23,5 +23,6 @@ Try rendering a "real-time" gif of the samples:
     http://localhost:8080/gopher
     
 To see the *almost* synched version of the gif with the song:
+
     http://127.0.0.1:8080/rick/rick1.html
     http://127.0.0.1:8080/rick/rick2.html
