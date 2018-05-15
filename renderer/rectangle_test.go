@@ -36,7 +36,7 @@ func TestDrawRectangle(t *testing.T) {
 		pos{11, 11}: color.White,
 	}
 
-	DrawRectangle(&m, 10, 2, 12, 12, mockColorFunc())
+	DrawRectangle(&m, 10, 10, 12, 12, 12, mockColorFunc())
 
 	if len(m) != len(expected) {
 		t.Fatalf("Unexpected rectangle number of pixles: %d. expected: %d", len(m), len(expected))

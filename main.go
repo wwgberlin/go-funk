@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"image"
-	"image/png"
+	"image/jpeg"
 	"log"
 	"net"
 	"net/http"
@@ -36,7 +36,7 @@ func main() {
 
 func start(addr string, data audio.WavData) {
 
-	http.HandleFunc("/", ok)
+	http.HandleFunc("/", status)
 	http.HandleFunc("/samples", samplesHandler(data))
 	http.HandleFunc("/waveform", waveformHandler(data))
 	http.HandleFunc("/gif", gifHandler(data))
@@ -60,18 +60,18 @@ func getFileData(filePath string) (data audio.WavData, err error) {
 }
 
 func gopherImage() image.Image {
-	f, err := os.Open("public/rick/gopher.jpeg")
+	f, err := os.Open("public/rick/gopher.jpg")
 	if err != nil {
 		panic(err)
 	}
 	defer f.Close()
-	img, err := png.Decode(f)
+	img, err := jpeg.Decode(f)
 	if err != nil {
 		panic(err)
 	}
 	return img
 
 }
-func ok(w http.ResponseWriter, req *http.Request) {
+func status(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintln(w, "ok")
 }

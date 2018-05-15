@@ -3,26 +3,26 @@ package renderer
 import (
 	"image"
 	"image/gif"
+	"io"
 	"time"
 )
 
-func MakeGif2(points []int, width, height int, duration time.Duration, colorFunc ColorFunc) *gif.GIF {
+func MakeGif2(w io.Writer, points []int, duration time.Duration, conf Config) {
 	delay := int(duration.Seconds() / float64(len(points)) * 1000 / 10) // delay between frames (10ms)
 
 	anim := gif.GIF{LoopCount: len(points)}
 
-	points = project(points, height)
+	points = Project(points, conf.Height)
 
 	for i := range points {
-		low, high := clampMin(i-width/2, 0), clampMax(i+width/2, len(points))
-		img := renderFrame2(points[low:high], width, height, colorFunc)
+		low, high := clampMin(i-conf.Width/2, 0), clampMax(i+conf.Width/2, len(points))
+		img := renderFrame2(points[low:high], conf.Width, conf.Height, conf.ColorFunc)
 
 		anim.Delay = append(anim.Delay, delay)
 		anim.Image = append(anim.Image, img)
 	}
 
-	return &anim
-
+	gif.EncodeAll(w, &anim)
 }
 
 func renderFrame2(points []int, width, height int, colorFunc ColorFunc) *image.Paletted {
@@ -30,7 +30,7 @@ func renderFrame2(points []int, width, height int, colorFunc ColorFunc) *image.P
 	img := image.NewPaletted(rect, colorFunc.Palette())
 
 	for x, y := range points {
-		DrawRectangle(img, x, y, 1, height, colorFunc)
+		DrawRectangle(img, x, height-y, x+1, height, height, colorFunc)
 	}
 
 	return img
