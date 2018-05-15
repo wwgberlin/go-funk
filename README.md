@@ -6,7 +6,7 @@ Run the server with:
 
 Or: 
 
-    go build && ./go-funk
+    go test ./... && go build && ./go-funk
 You can see all the samples at:
 
     curl http://localhost:8080/samples
