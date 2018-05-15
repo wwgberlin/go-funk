@@ -24,8 +24,6 @@ func ColorGopherFunc(img image.Image) renderer.ColorFunc {
 	// to get the original image height uncomment this:
 	//imgHeight := img.Bounds().Max.Y - img.Bounds().Min.Y
 	return func(x, xOffset, y, yOffset, height int) color.Color {
-		//oldX := (x - xOffset) * imgHeight / height
-		//oldY := (y - yOffset) * imgHeight / height
 		return color.Black
 	}
 }
