@@ -23,10 +23,5 @@ func max(points []int) int {
 // therefore the result slice will be [3,6,18]
 
 func Project(in []int, newMax int) []int {
-	maxSlice := max(in)
-	out := make([]int, len(in))
-	for i, v := range in {
-		out[i] = v * newMax / maxSlice
-	}
-	return out
+	return nil
 }
