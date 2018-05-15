@@ -44,7 +44,6 @@ func colorGopherFunc(img image.Image) renderer.ColorFunc {
 		oldX := ratio * float64(x)
 		oldY := ratio * float64(y)
 		c := img.At(int(oldX), int(oldY))
-		//fmt.Println(x, y, c, ratio)
 		return c
 	}
 }
