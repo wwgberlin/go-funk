@@ -1,7 +1,7 @@
 GO_FILES:=$(shell find . -name "*.go")
 
-wavelet: $(GO_FILES)
-	go build .
+go-funk: $(GO_FILES)
+	go build -o $@ .
 
 .PHONY: test
 test: $(GO_FILES)
