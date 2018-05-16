@@ -17,9 +17,25 @@ var errCountInvalid = errors.New("count must be <= length of the slice")
 // * hint: use windowSize
 
 func Compress(samples []int, count int, fn SamplerFunc) ([]int, error) {
-	return nil, nil
+	if count > len(samples) {
+		return nil, errors.New("count bigger than length")
+	}
+	size := windowSize(len(samples), count)
+	compressed := make([]int, count)
+	for s := 0; s < count; s++ {
+		low, high := clamp(s*size, len(samples)), clamp((s+1)*size, len(samples))
+		compressed[s] = fn(samples[low:high])
+	}
+	return compressed, nil
 }
 
 func windowSize(l, c int) int {
 	return int(math.Ceil(float64(l) / float64(c)))
+}
+
+func clamp(v, max int) int {
+	if v > max {
+		return max
+	}
+	return v
 }
