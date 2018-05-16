@@ -13,8 +13,6 @@ func Gopher(w io.Writer, points []int, duration time.Duration, conf Config) {
 
 	anim := gif.GIF{LoopCount: len(points)}
 
-	points = Project(points, conf.Height)
-
 	for _, v := range points {
 		img := renderGopher(v, conf.Width, conf.Height, conf.ColorFunc)
 

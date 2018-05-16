@@ -12,8 +12,6 @@ func MakeGif2(w io.Writer, points []int, duration time.Duration, conf Config) {
 
 	anim := gif.GIF{LoopCount: len(points)}
 
-	points = Project(points, conf.Height)
-
 	for i := range points {
 		low, high := clampMin(i-conf.Width/2, 0), clampMax(i+conf.Width/2, len(points))
 		img := renderFrame2(points[low:high], conf.Width, conf.Height, conf.ColorFunc)

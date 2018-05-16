@@ -24,7 +24,8 @@ func handler(data audio.WavData, defaults *RequestData, rdr renderer.RenderFunc)
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		rdr(w, compressed, data.Duration, reqData.Conf)
+
+		rdr(w, renderer.Project(compressed, reqData.Conf.Height), data.Duration, reqData.Conf)
 	}
 }
 

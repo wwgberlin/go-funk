@@ -8,7 +8,6 @@ import (
 )
 
 func DrawWaveform(w io.Writer, points []int, _ time.Duration, conf Config) {
-	points = Project(points, conf.Height)
 	width, height := len(points), max(points)
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 
