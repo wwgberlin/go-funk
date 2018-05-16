@@ -25,8 +25,9 @@ func max(points []int) int {
 func Project(in []int, newMax int) []int {
 	maxIn := max(in)
 	out := make([]int, len(in))
+	ratio := float64(newMax) / float64(maxIn)
 	for i, v := range in {
-		out[i] = int(float64(v) / float64(maxIn) * float64(newMax))
+		out[i] = int(float64(v) * ratio)
 	}
 	return out
 }
