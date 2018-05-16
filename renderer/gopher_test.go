@@ -21,7 +21,7 @@ func TestRenderGopherFrame(t *testing.T) {
 	for i := 0; i < 3; i++ {
 		if i == 1 {
 			if img.At(i, i) != color.Black {
-				t.Fatalf("Unexpected color at (%d,%d) wanted white", i, i)
+				t.Fatalf("Unexpected color at (%d,%d) wanted black", i, i)
 			}
 		} else {
 			if img.At(i, i) != color.White {
