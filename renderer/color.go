@@ -3,7 +3,7 @@ package renderer
 import "image/color"
 
 type (
-	ColorFunc func(int, int, int, int, int) color.Color
+	ColorFunc func(x, xOffset, y, yOffset, height int) color.Color
 
 	Colorer struct {
 		Fn ColorFunc

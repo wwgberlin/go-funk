@@ -30,8 +30,8 @@ func (m mockImage) At(x, y int) color.Color {
 func TestColorGopherFunc(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
 
-	dim := rand.Intn(100)
-	newDim := rand.Intn(dim)
+	dim := rand.Intn(100) + 1
+	newDim := rand.Intn(dim) + 1
 
 	recX, recY := math.MinInt64, math.MinInt64
 	res := color.Gray{Y: uint8(rand.Intn(255))}
