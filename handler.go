@@ -40,10 +40,10 @@ func gifHandler(data audio.WavData) func(w http.ResponseWriter, req *http.Reques
 	defaults := RequestData{
 		Sampler: sampler.AbsAvg,
 		Conf: renderer.Config{
-			Width:     50,
-			Height:    100,
-			Count:     3000,
-			ColorFunc: renderer.Black,
+			Width:   50,
+			Height:  100,
+			Count:   3000,
+			Colorer: renderer.Colors["black"],
 		},
 	}
 	return handler(data, &defaults, renderer.MakeGif)
@@ -54,10 +54,10 @@ func gif2Handler(data audio.WavData) func(w http.ResponseWriter, req *http.Reque
 	defaults := RequestData{
 		Sampler: sampler.AbsAvg,
 		Conf: renderer.Config{
-			Width:     50,
-			Height:    100,
-			Count:     3000,
-			ColorFunc: renderer.Black,
+			Width:   50,
+			Height:  100,
+			Count:   3000,
+			Colorer: renderer.Colors["black"],
 		},
 	}
 	return handler(data, &defaults, renderer.MakeGif2)
@@ -67,10 +67,10 @@ func gopherHandler(data audio.WavData, img image.Image) func(w http.ResponseWrit
 	defaults := RequestData{
 		Sampler: sampler.AbsAvg,
 		Conf: renderer.Config{
-			Width:     100,
-			Height:    100,
-			Count:     3000,
-			ColorFunc: ColorGopherFunc(img),
+			Width:   100,
+			Height:  100,
+			Count:   3000,
+			Colorer: renderer.Colorer{ColorGopherFunc(img), ColorGopherPalette},
 		},
 	}
 	return handler(data, &defaults, renderer.Gopher)
@@ -80,10 +80,10 @@ func waveformHandler(data audio.WavData) func(w http.ResponseWriter, r *http.Req
 	defaults := RequestData{
 		Sampler: sampler.AbsAvg,
 		Conf: renderer.Config{
-			Width:     1200,
-			Count:     1200,
-			Height:    math.MaxUint8,
-			ColorFunc: renderer.Black,
+			Width:   1200,
+			Count:   1200,
+			Height:  math.MaxUint8,
+			Colorer: renderer.Colors["black"],
 		},
 	}
 

@@ -14,7 +14,7 @@ func MakeGif2(w io.Writer, points []int, duration time.Duration, conf Config) {
 
 	for i := range points {
 		low, high := clampMin(i-conf.Width/2, 0), clampMax(i+conf.Width/2, len(points))
-		img := renderFrame2(points[low:high], conf.Width, conf.Height, conf.ColorFunc)
+		img := renderFrame2(points[low:high], conf.Width, conf.Height, conf.Colorer)
 
 		anim.Delay = append(anim.Delay, delay)
 		anim.Image = append(anim.Image, img)
@@ -23,12 +23,12 @@ func MakeGif2(w io.Writer, points []int, duration time.Duration, conf Config) {
 	gif.EncodeAll(w, &anim)
 }
 
-func renderFrame2(points []int, width, height int, colorFunc ColorFunc) *image.Paletted {
+func renderFrame2(points []int, width, height int, colorer Colorer) *image.Paletted {
 	rect := image.Rect(0, 0, width, height)
-	img := image.NewPaletted(rect, colorFunc.Palette())
+	img := image.NewPaletted(rect, colorer.Palette())
 
 	for x, y := range points {
-		DrawRectangle(img, x, height-y, x+1, height, height, colorFunc)
+		DrawRectangle(img, x, height-y, x+1, height, height, colorer.Fn)
 	}
 
 	return img

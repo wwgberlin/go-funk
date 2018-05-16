@@ -14,7 +14,7 @@ func DrawWaveform(w io.Writer, points []int, _ time.Duration, conf Config) {
 	DrawRectangle(img, 0, 0, width, height, height, White)
 
 	for x, y := range points {
-		DrawRectangle(img, x, height-y, x+1, height, height, conf.ColorFunc)
+		DrawRectangle(img, x, height-y, x+1, height, height, conf.Colorer.Color)
 	}
 	png.Encode(w, img)
 }

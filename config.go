@@ -33,12 +33,12 @@ func parseRequest(req *http.Request, defaults *RequestData) (*RequestData, error
 	query := req.URL.Query()
 
 	if colorKey := query.Get("colors"); colorKey == "" {
-		d.Conf.ColorFunc = defaults.Conf.ColorFunc
+		d.Conf.Colorer = defaults.Conf.Colorer
 	} else {
 		if colorFunc, ok := renderer.Colors[colorKey]; !ok {
 			return nil, fmt.Errorf("could not find color method with key %s", colorKey)
 		} else {
-			d.Conf.ColorFunc = colorFunc
+			d.Conf.Colorer = colorFunc
 		}
 	}
 

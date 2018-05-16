@@ -27,3 +27,11 @@ func ColorGopherFunc(img image.Image) renderer.ColorFunc {
 		return color.Black
 	}
 }
+
+var ColorGopherPalette = color.Palette{
+	color.White,
+	color.Black,
+	color.RGBA{156, 202, 217, 255},
+	color.RGBA{255, 215, 54, 255},
+	color.RGBA{125, 125, 125, 255},
+}

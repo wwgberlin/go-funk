@@ -24,7 +24,7 @@ func main() {
 	addr := net.JoinHostPort("", *port)
 
 	sampler.RegSampler("", sampler.AbsAvg)
-	renderer.RegColorFunc("", renderer.Black)
+	renderer.RegColorFunc("", renderer.Colors["black"])
 
 	data, err := getFileData(filePath)
 	if err != nil {
