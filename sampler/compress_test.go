@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestTransform(t *testing.T) {
+func TestCompress(t *testing.T) {
 	var acc []int
 	var in []int
 
@@ -28,7 +28,7 @@ func TestTransform(t *testing.T) {
 	}
 }
 
-func TestTransformBounds(t *testing.T) {
+func TestCompressBounds(t *testing.T) {
 	var acc []int
 	var in []int
 
@@ -55,7 +55,7 @@ func TestTransformBounds(t *testing.T) {
 	}
 }
 
-func TestTransformBounds2(t *testing.T) {
+func TestCompressBounds2(t *testing.T) {
 	var acc []int
 	var in []int
 
@@ -85,7 +85,7 @@ func TestTransformBounds2(t *testing.T) {
 	}
 }
 
-func TestTransformError(t *testing.T) {
+func TestCompressError(t *testing.T) {
 	var in []int
 
 	fn := func(v []int) int {
