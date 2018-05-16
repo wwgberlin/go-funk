@@ -21,10 +21,12 @@ import (
 // if x = 15, xOffset = 10 the original x would be 10 (15-10)*2
 
 func ColorGopherFunc(img image.Image) renderer.ColorFunc {
+	imgHeight := img.Bounds().Max.Y - img.Bounds().Min.Y
 	// to get the original image height uncomment this:
 	//imgHeight := img.Bounds().Max.Y - img.Bounds().Min.Y
 	return func(x, xOffset, y, yOffset, height int) color.Color {
-		return color.Black
+		ratio := imgHeight / height
+		return img.At((x-xOffset)*ratio, (y-yOffset)*ratio)
 	}
 }
 
