@@ -11,9 +11,6 @@ func TestTransform(t *testing.T) {
 	var in []int
 
 	fn := func(v []int) int {
-		if len(v) == 0 {
-			t.Fatal("sampler received an empty slice")
-		}
 		acc = append(acc, v...)
 		return v[0]
 	}
@@ -92,7 +89,7 @@ func TestTransformError(t *testing.T) {
 	var in []int
 
 	fn := func(v []int) int {
-		t.Fatal("sampler was expected te be called")
+		t.Fatal("sampler was not expected te be called")
 		return 0
 	}
 
